@@ -1,40 +1,96 @@
-# Rust Port Implementation Plan
+# Comprehensive Implementation Plan
 
-## Overview
-This implementation plan outlines the necessary steps to achieve a complete Rust port of the OpenSpec project. The plan prioritizes maintaining the essence of the original implementation while taking advantage of Rust's features and safety guarantees.
+## Executive Summary
+The goal of this project is to port the OpenSpec CLI from Node.js to Rust, eliminating npm dependencies.
 
-## Exclusions
-- **Telemetry**: The telemetry functionalities will be omitted in this implementation phase.
-- **Shell Completion Commands**: Any shell completion command features will not be included in this initial phase.
+## Original CLI Analysis
+The current OpenSpec CLI is hosted in the [Fission-AI/OpenSpec](https://github.com/Fission-AI/OpenSpec) repository, utilizing package `@fission-ai/openspec` v0.21.0 with Commander.js. It supports 13 original commands:
+1. Command 1
+2. Command 2
+3. Command 3
+4. Command 4
+5. Command 5
+6. Command 6
+7. Command 7
+8. Command 8
+9. Command 9
+10. Command 10
+11. Command 11 (excluded)
+12. Command 12 (excluded)
+13. Command 13 (excluded)
 
-## Core Commands
-The implementation will focus on the following 10 core commands:
-1. Command 1: Description
-2. Command 2: Description
-3. Command 3: Description
-4. Command 4: Description
-5. Command 5: Description
-6. Command 6: Description
-7. Command 7: Description
-8. Command 8: Description
-9. Command 9: Description
-10. Command 10: Description
+We will implement the 10 core commands, excluding completion feedback and experimental commands.
 
-## Development Approach
-The project will adopt a Test-Driven Development (TDD) approach, ensuring that tests are written before the actual implementation of features. This will help maintain code quality and reduce bugs.
+## Implementation Strategy
+The implementation will consist of 10 phases over 8 weeks:
 
-## Timeline
-The implementation plan is structured around an 8-week timeline as follows:
-- **Week 1**: Requirements gathering and finalizing core commands.
-- **Week 2**: Setting up the Rust environment and initial architecture.
-- **Week 3-5**: Implementing core commands with TDD.
-- **Week 6**: Integration testing and refinements.
-- **Week 7**: Documentation and final adjustments.
-- **Week 8**: Code review and final testing.
+### Phase 1: Project Setup
+- Create a new Rust project using Cargo.
+- Add the following dependencies in the `Cargo.toml`:
+  - `clap`
+  - `serde`
+  - `serde_yaml`
+  - `serde_json`
+  - `anyhow`
+  - `thiserror`
+  - `tokio`
+  - `colored`
+  - `indicatif`
+  - `dialoguer`
+  - `glob`
+  - `home`
+  - `walkdir`
+  - `regex`
+  - `chrono`
 
-## Architectural Decisions
-- **Data Handling**: Description of how data will be managed and represented.
-- **Error Management**: Approach to error handling in Rust.
-- **Concurrency Model**: Details about how concurrency will be managed (if applicable).
+### Module Structure
+- `src/`
+  - `main.rs`
+  - `cli/`
+  - `commands/`
+  - `core/`
+  - `utils/`
+  - `error.rs`
 
-This plan is subject to changes based on ongoing feedback and technical challenges encountered during implementation.
+### TDD Approach
+We will follow a Test-Driven Development approach, with test harness examples provided for each command.
+
+### Phase 3: Discovery and List Command
+Implementation of the Discovery and List command.
+
+### Phase 4: Markdown Parsing
+Parsing of `spec.md` and `proposal.md` files is essential for interpreting structured sections. This will facilitate handling user input and enhancing functionality.
+
+### Test Oracle Strategy
+We will use the outputs from the Node.js CLI for comparison, ensuring the new Rust implementation maintains functional parity.
+
+### Success Criteria
+- Functional parity with the original CLI
+- Performance benchmarks against the existing implementation
+- Distribution goals for the Rust application
+
+### Risk Mitigation
+Assess risks associated with dependency transitions and language differences, planning for contingencies.
+
+### Timeline
+| Phase | Duration |
+|-------|----------|
+| Phase 1 | 1 week   |
+| Phase 2 | 1 week   |
+| Phase 3 | 1 week   |
+| Phase 4 | 1 week   |
+| Phase 5 | 1 week   |
+| Phase 6 | 1 week   |
+| Phase 7 | 1 week   |
+| Phase 8 | 1 week   |
+| Phase 9 | 1 week   |
+| Phase 10| 1 week   |
+
+### Exclusions
+- Telemetry
+- Shell completion feedback
+- Experimental commands (deferred to v2.0)
+
+### Open Questions
+- What are the potential challenges in replacing complex command logic?
+- How can we optimize the Rust implementation for better performance?
